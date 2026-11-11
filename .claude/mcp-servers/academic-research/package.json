@@ -1,0 +1,12 @@
+{
+  "name": "academic-research-mcp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local MCP server wrapping the public Semantic Scholar and arXiv APIs for faculty/paper research during Masters applications.",
+  "type": "module",
+  "main": "index.js",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "fast-xml-parser": "^5.11.1"
+  }
+}

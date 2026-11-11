@@ -1,0 +1,228 @@
+@import "tailwindcss";
+@import "@fontsource-variable/public-sans";
+@import "@fontsource-variable/public-sans/wght-italic.css";
+@import "@fontsource-variable/newsreader/opsz.css";
+@import "@fontsource-variable/newsreader/opsz-italic.css";
+
+/*
+  Design tokens — "night season"
+  One applicant, six countries, one season running to the intake. True black page, white type,
+  and three signals that each mean exactly one thing:
+    accent (yellow)  act on this: primary actions, today, what's next, things due
+    danger (red)     urgent: due within two weeks, errors, rejections
+    live (blue)      live or interactive: links, the selected page, agents at work, focus
+  Everything else is white or grey. Finished things (paid, submitted) go quiet rather than green.
+  Type: Newsreader (serif, optical sizes) for names and titles, the voice of an admissions letter;
+  Public Sans for everything else, with tabular figures for dates, days and money.
+
+  Tags are the one place colour is categorical. Each tag family maps its values to the tones below
+  (see TAGS in lib.ts): tier reach/target/safety = red/yellow/green, stages walk the spectrum, etc.
+  A tag is always tinted fill + coloured text + faint ring, never a solid block.
+
+  Sizes are in rem so the whole UI steps up on large monitors (html font-size below):
+  16px on phones and laptops, 17px from 2200px wide (a 2560x1440 screen at 100%).
+*/
+@theme {
+  --color-bg: #000000;
+  --color-panel: #0d0d0d;
+  --color-panel-2: #171717;
+  --color-line: #262626;
+  --color-line-strong: #3d3d3d;
+  --color-muted: #a1a1a1;
+  --color-text: #ffffff;
+  --color-accent: #ffd400;
+  --color-accent-2: #e6bf00;
+  --color-live: #2e9bff;
+  --color-ok: #ffffff;
+  --color-warn: #ffd400;
+  --color-danger: #ff3b30;
+  --color-info: #2e9bff;
+
+  /* tag tones (categorical only) */
+  --color-t-red: #ff5a52;
+  --color-t-orange: #ff9f0a;
+  --color-t-yellow: #ffd60a;
+  --color-t-green: #34d36b;
+  --color-t-teal: #3fd0e0;
+  --color-t-blue: #4aa8ff;
+  --color-t-violet: #b98bff;
+  --color-t-pink: #ff6fb5;
+  --color-t-grey: #9a9a9a;
+
+  --breakpoint-3xl: 120rem;
+  --breakpoint-4xl: 150rem;
+
+  --font-sans: "Public Sans Variable", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  --font-display: "Newsreader Variable", ui-serif, Georgia, serif;
+  --font-serif: "Newsreader Variable", ui-serif, Georgia, serif;
+  --font-mono: ui-monospace, "Cascadia Code", Consolas, monospace;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+@media (min-width: 2200px) {
+  html {
+    font-size: 17px;
+  }
+}
+
+/* iPhone: keep content clear of the notch and the home indicator. */
+.pt-safe { padding-top: env(safe-area-inset-top); }
+.pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+.mb-tabbar { margin-bottom: calc(4rem + env(safe-area-inset-bottom)); }
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  overscroll-behavior-y: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Display type: Newsreader picks its optical size from the font size, so big titles get the fine display cut. */
+.font-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  letter-spacing: -0.012em;
+}
+
+/* Figures that line up in columns (dates, day counts, money) without switching to a code face. */
+.num {
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+::selection {
+  background: color-mix(in oklab, var(--color-accent) 35%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-live);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border-radius: 8px;
+  border: 2px solid var(--color-bg);
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.7);
+}
+
+/* Pages fade in on navigation; nothing else moves on its own. */
+@keyframes page-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.page-in {
+  animation: page-in 180ms ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-in {
+    animation: none;
+  }
+  * {
+    transition: none !important;
+  }
+}
+
+/* Rendered markdown (research notes, coach feedback, recommender info). */
+.prose-dark {
+  line-height: 1.65;
+  font-size: 0.9rem;
+  color: #e0e0e0;
+  max-width: 76ch;
+}
+.prose-dark h1,
+.prose-dark h2,
+.prose-dark h3 {
+  font-family: var(--font-display);
+  color: var(--color-text);
+  font-weight: 500;
+}
+.prose-dark h1 { font-size: 1.35rem; margin: 1.1rem 0 0.5rem; }
+.prose-dark h2 { font-size: 1.15rem; margin: 1.2rem 0 0.4rem; }
+.prose-dark h3 { font-size: 1rem; margin: 1rem 0 0.3rem; }
+.prose-dark > :first-child { margin-top: 0; }
+.prose-dark p { margin: 0.5rem 0; }
+.prose-dark ul { list-style: disc; padding-left: 1.2rem; margin: 0.4rem 0; }
+.prose-dark ol { list-style: decimal; padding-left: 1.2rem; margin: 0.4rem 0; }
+.prose-dark li { margin: 0.2rem 0; }
+.prose-dark li::marker { color: var(--color-muted); }
+.prose-dark a { color: var(--color-live); text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1px; }
+.prose-dark code { font-family: var(--font-mono); background: #1a1a1a; padding: 0.1rem 0.3rem; border-radius: 4px; font-size: 0.8rem; }
+.prose-dark table { border-collapse: collapse; margin: 0.8rem 0; font-size: 0.85rem; display: block; overflow-x: auto; max-width: 100%; }
+.prose-dark th { color: var(--color-muted); font-weight: 500; }
+.prose-dark th, .prose-dark td { border: 1px solid var(--color-line); padding: 0.3rem 0.5rem; text-align: left; }
+.prose-dark hr { border-color: var(--color-line); margin: 1.2rem 0; }
+.prose-dark strong { color: var(--color-text); font-weight: 600; }
+.prose-dark blockquote { border-left: 2px solid var(--color-line-strong); padding-left: 0.75rem; color: var(--color-muted); }
+
+/* Agent Town */
+@keyframes town-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2.5px); }
+}
+@keyframes town-pulse {
+  0% { opacity: 0.7; transform: scale(0.8); }
+  100% { opacity: 0; transform: scale(1.5); }
+}
+@keyframes town-flicker {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 0.55; }
+}
+@keyframes town-smoke {
+  0% { opacity: 0.35; transform: translate(0, 0) scale(0.8); }
+  100% { opacity: 0; transform: translate(4px, -18px) scale(1.8); }
+}
+.town-bob { animation: town-bob 1.6s ease-in-out infinite; }
+.town-pulse { animation: town-pulse 1.8s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+.town-flicker { animation: town-flicker 2.6s ease-in-out infinite; }
+.town-smoke { animation: town-smoke 2.4s ease-out infinite; transform-box: fill-box; transform-origin: center; }
+.town-building:hover > :not(text),
+.town-building:focus-visible > :not(text) { filter: brightness(1.25); }
+@media (prefers-reduced-motion: reduce) {
+  .town-bob, .town-pulse, .town-flicker, .town-smoke { animation: none; }
+}
+
+/* Grid and flex children default to their content's min width, so one long unbreakable line (a URL,
+   a truncated name) can push a card wider than a phone screen. Let them shrink instead. */
+.grid > *,
+.flex-1 {
+  min-width: 0;
+}
+
+/* Swipeable rows (stage chips, recommender cards): scroll by touch, no visible bar. */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "academic-research": {
+      "command": "node",
+      "args": [".claude/mcp-servers/academic-research/index.js"]
+    }
+  }
+}

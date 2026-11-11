@@ -1,0 +1,26 @@
+# --- Your data: never part of this repo -------------------------------------
+# Profile, resumes, transcript, scores, recommenders, applications, passwords,
+# and the app's own history. Back it up as its own private repo instead.
+data/
+
+# Safety net for the old single-folder layout, where these sat at the top level.
+/Common/
+/Applications/
+/Private/
+/context.md
+
+# --- Machine-specific config and secrets -------------------------------------
+app/.env
+app/.local/
+# Personal Claude Code instructions, e.g. "@data/CLAUDE.md"
+CLAUDE.local.md
+.claude/settings.local.json
+.claude/worktrees/
+.vscode/
+
+# --- Installed and built ------------------------------------------------------
+app/.venv/
+app/frontend/node_modules/
+app/frontend/dist/
+.claude/mcp-servers/*/node_modules/
+__pycache__/
